@@ -91,5 +91,3 @@ Open the address shown in the terminal (usually http://localhost:5173) in your b
 - If the dev server port is in use, Vite will suggest an alternate port.
 
 ---
-
-If you'd like, I can add a short CONTRIBUTING section, examples of common issues, or tailor the README to include screenshots or badges.

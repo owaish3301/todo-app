@@ -1,16 +1,95 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Todo App
 
-Currently, two official plugins are available:
+A small, single-page Todo application built with Vite and React. This project provides a minimal UI for adding, viewing, and managing todos. It's intended as a starter project or learning exercise.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+- Add and list todos
+- Date selector for todos
+- Simple dashboard layout
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech stack
 
-## Expanding the ESLint configuration
+- React
+- Vite
+- JavaScript
+- TailwindCSS
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Local setup
+
+Follow these steps to run the project locally on Windows (PowerShell):
+
+1. Clone the repository:
+
+```
+git clone <your-repo-url>
+cd todoApp
+```
+
+2. Install dependencies:
+
+# Todo App
+
+A small, single-page Todo application built with Vite and React. This project provides a minimal UI for adding, viewing, and managing todos. It's intended as a starter project or learning exercise.
+
+## Features
+
+- Add and list todos
+- Date selector for todos
+- Simple dashboard layout
+
+## Tech stack
+
+- React
+- Vite
+- JavaScript
+- TailwindCSS
+
+## Development status
+
+- [x] Dashboard UI — currently working
+- [ ] Add todo form — pending
+- [ ] Signin and signup page — pending
+- [ ] State management — pending
+- [ ] API — pending
+- [ ] Animations — pending
+
+## Local setup
+
+Follow these steps to run the project locally on Windows (PowerShell):
+
+1. Clone the repository:
+
+```
+git clone <your-repo-url>
+cd todoApp
+```
+
+2. Install dependencies:
+
+```
+npm install
+```
+
+3. Start the development server:
+
+```
+npm run dev
+```
+
+Open the address shown in the terminal (usually http://localhost:5173) in your browser.
+
+## Notes
+
+- Replace <your-repo-url> with the actual Git repository URL when cloning.
+- If you use a shell other than PowerShell, the commands are the same for Git and npm.
+
+## Troubleshooting
+
+- If you see errors during `npm install`, ensure you have Node.js and npm installed. Check with `node -v` and `npm -v`.
+- If the dev server port is in use, Vite will suggest an alternate port.
+
+---
+
+If you'd like, I can add a short CONTRIBUTING section, examples of common issues, or tailor the README to include screenshots or badges.

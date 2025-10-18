@@ -48,9 +48,9 @@ A small, single-page Todo application built with Vite and React. This project pr
 
 ## Development status
 
-- [x] Dashboard UI — currently working
+- [x] Dashboard UI — just needs more polishing, almost done
 - [ ] Add todo form — pending
-- [ ] Signin and signup page — pending
+- [x] Signin, signup and forgot-pass page — working
 - [ ] State management — pending
 - [ ] API — pending
 - [ ] Animations — pending

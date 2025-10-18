@@ -27,30 +27,36 @@ function SignIn() {
             className="w-full max-w-sm flex flex-col"
             onSubmit={handleFormSubmit}
           >
-            <div className="mb-4 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-green-700">
+            <div className="mb-4 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-[#7b86ff]">
               <Mail className="mr-3 text-[#7b86ff]" width={24} height={24} />
               <Input
-               type={"email"}
-               placeholder={"Enter Your Email"} 
-               name={"email"} 
-               value={email} 
-               valueSetter={setEmail}
+                type={"email"}
+                placeholder={"Enter Your Email"}
+                name={"email"}
+                value={email}
+                valueSetter={setEmail}
               />
             </div>
 
-            <div className="mb-2 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-green-700">
+            <div className="mb-2 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-[#7b86ff]">
               <Lock className="mr-3 text-[#7b86ff]" width={24} height={24} />
               <Input
-               type={viewPassword ? "text" : "password"} 
-               placeholder={"Enter Your Password"} 
-               name={"password"}
-               value={password}
-               valueSetter={setPassword}
+                type={viewPassword ? "text" : "password"}
+                placeholder={"Enter Your Password"}
+                name={"password"}
+                value={password}
+                valueSetter={setPassword}
               />
-              <ViewPassword viewPassword={viewPassword} setViewPassword={setViewPassword} />
+              <ViewPassword
+                viewPassword={viewPassword}
+                setViewPassword={setViewPassword}
+              />
             </div>
 
-            <Link className="text-sm text-right text-[#7b86ff] mb-4" to={'/reset-password'}>
+            <Link
+              className="text-sm text-right text-[#7b86ff] mb-4"
+              to={"/reset-password"}
+            >
               Forgot Password?
             </Link>
 
@@ -61,7 +67,9 @@ function SignIn() {
 
           <div className="">
             Don't have an account?{" "}
-            <Link className="text-[#7b86ff]" to={'/signup'}>Sign Up</Link>
+            <Link className="text-[#7b86ff]" to={"/signup"}>
+              Sign Up
+            </Link>
           </div>
         </div>
       </div>

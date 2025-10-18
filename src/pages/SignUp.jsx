@@ -9,6 +9,7 @@ import { Link } from "react-router";
 function SignUp(){
     const [viewPassword, setViewPassword] = useState(false);
     const [viewConfirmPassword, setConfirmViewPassword] = useState(false);
+    const [user, setUser] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -28,7 +29,17 @@ function SignUp(){
               className="w-full max-w-sm flex flex-col"
               onSubmit={handleFormSubmit}
             >
-              <div className="mb-4 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-green-700">
+              <div className="mb-4 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-[#7b86ff]">
+                <Mail className="mr-3 text-[#7b86ff]" width={24} height={24} />
+                <Input
+                  type={"text"}
+                  placeholder={"Enter Your Name"}
+                  name={"name"}
+                  value={user}
+                  valueSetter={setUser}
+                />
+              </div>
+              <div className="mb-4 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-[#7b86ff]">
                 <Mail className="mr-3 text-[#7b86ff]" width={24} height={24} />
                 <Input
                   type={"email"}
@@ -39,7 +50,7 @@ function SignUp(){
                 />
               </div>
 
-              <div className="mb-2 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-green-700">
+              <div className="mb-2 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-[#7b86ff]">
                 <Lock className="mr-3 text-[#7b86ff]" width={24} height={24} />
                 <Input
                   type={viewPassword ? "text" : "password"}
@@ -54,7 +65,7 @@ function SignUp(){
                 />
               </div>
 
-              <div className="mb-2 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-green-700">
+              <div className="mb-4 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-[#7b86ff]">
                 <Lock className="mr-3 text-[#7b86ff]" width={24} height={24} />
                 <Input
                   type={viewConfirmPassword ? "text" : "password"}
@@ -77,7 +88,9 @@ function SignUp(){
 
             <div className="">
               Already have an account?{" "}
-              <Link className="text-[#7b86ff]" to={'/signin'}>Sign In</Link>
+              <Link className="text-[#7b86ff]" to={"/signin"}>
+                Sign In
+              </Link>
             </div>
           </div>
         </div>

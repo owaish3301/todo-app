@@ -1,10 +1,12 @@
 import HeaderImage from "../components/authentication/HeaderImage";
 import { useState } from "react";
 import { Mail, Lock } from "lucide-react";
+import { Link } from "react-router";
+
 import SubmitButton from "../components/authentication/SubmitButton";
 import ViewPassword from "../components/authentication/ViewPassword";
 import Input from "../components/authentication/Input";
-import { Link } from "react-router";
+import { nameSchema, passwordSchema, emailSchema } from "../utils/FormValidation";
 
 function SignUp(){
     const [viewPassword, setViewPassword] = useState(false);
@@ -25,14 +27,40 @@ function SignUp(){
     }
 
     const formErrorHandler = () => {
-      if ( user.trim().length === 0 ){
-        setError(prev => ({...prev, name : "Name can't be empty"}))
-        return false;
+      // Reset errors first
+      let newErrors = { name: null, email: null, password: null };
+
+      const nameValidation = nameSchema.safeParse(user.trim());
+      const emailValidation = emailSchema.safeParse(email);
+      const passwordValidation = passwordSchema.safeParse(password);
+
+      let isValid = true;
+
+      if (!nameValidation.success) {
+        // zod returns issues array, take first message
+        newErrors.name = nameValidation.error.issues[0]?.message || "Invalid name";
+        isValid = false;
       }
-      else{
-        setError(prev=>({...prev, name:null}))
+
+      if (!emailValidation.success) {
+        newErrors.email = emailValidation.error.issues[0]?.message || "Invalid email";
+        isValid = false;
       }
-      
+
+      if (!passwordValidation.success) {
+        newErrors.password = passwordValidation.error.issues[0]?.message || "Invalid password";
+        isValid = false;
+      }
+
+      // confirm password match
+      if (password && confirmPassword && password !== confirmPassword) {
+        newErrors.password = "Passwords do not match";
+        isValid = false;
+      }
+
+      setError(newErrors);
+
+      return isValid;
     }
 
     return (

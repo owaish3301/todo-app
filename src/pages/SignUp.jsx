@@ -13,9 +13,26 @@ function SignUp(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [error, setError] = useState({"name":null,"email":null, "password":null});
 
     const handleFormSubmit = (e) =>{
-        e.preventDefault()
+        e.preventDefault();
+        const isCorrect = formErrorHandler();
+        if(!isCorrect){
+          return;
+        }
+
+    }
+
+    const formErrorHandler = () => {
+      if ( user.trim().length === 0 ){
+        setError(prev => ({...prev, name : "Name can't be empty"}))
+        return false;
+      }
+      else{
+        setError(prev=>({...prev, name:null}))
+      }
+      
     }
 
     return (
@@ -29,7 +46,7 @@ function SignUp(){
               className="w-full max-w-sm flex flex-col"
               onSubmit={handleFormSubmit}
             >
-              <div className="mb-4 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-[#7b86ff]">
+              <div className="flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-[#7b86ff]">
                 <Mail className="mr-3 text-[#7b86ff]" width={24} height={24} />
                 <Input
                   type={"text"}
@@ -39,7 +56,11 @@ function SignUp(){
                   valueSetter={setUser}
                 />
               </div>
-              <div className="mb-4 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-[#7b86ff]">
+              {error.name !== null && (
+                <div className="text-red-500 ml-4">{error.name}</div>
+              )}
+
+              <div className="mt-4 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-[#7b86ff]">
                 <Mail className="mr-3 text-[#7b86ff]" width={24} height={24} />
                 <Input
                   type={"email"}
@@ -49,8 +70,11 @@ function SignUp(){
                   valueSetter={setEmail}
                 />
               </div>
+              {error.email !== null && (
+                <div className="text-red-500 ml-4">{error.email}</div>
+              )}
 
-              <div className="mb-2 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-[#7b86ff]">
+              <div className="mt-4 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-[#7b86ff]">
                 <Lock className="mr-3 text-[#7b86ff]" width={24} height={24} />
                 <Input
                   type={viewPassword ? "text" : "password"}
@@ -65,7 +89,7 @@ function SignUp(){
                 />
               </div>
 
-              <div className="mb-4 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-[#7b86ff]">
+              <div className="mt-2 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-[#7b86ff]">
                 <Lock className="mr-3 text-[#7b86ff]" width={24} height={24} />
                 <Input
                   type={viewConfirmPassword ? "text" : "password"}
@@ -80,6 +104,9 @@ function SignUp(){
                   setViewPassword={setConfirmViewPassword}
                 />
               </div>
+              {error.password !== null && (
+                <div className="text-red-500 ml-4">{error.password}</div>
+              )}
 
               <SubmitButton text={"Sign Up"} label={"SignUp"} />
             </form>

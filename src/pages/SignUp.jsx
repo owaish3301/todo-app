@@ -17,13 +17,23 @@ function SignUp(){
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState({"name":null,"email":null, "password":null});
 
-    const handleFormSubmit = (e) =>{
+    const handleFormSubmit = async (e) =>{
         e.preventDefault();
         const isCorrect = formErrorHandler();
         if(!isCorrect){
           return;
         }
 
+        const response = await fetch(`${import.meta.env.VITE_API_URI}auth/signup`,{
+          method:"POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body:JSON.stringify({name:user,email,password})
+        });
+
+        const jsonResponse = response.json();
+        console.log(jsonResponse);
     }
 
     const formErrorHandler = () => {

@@ -7,6 +7,7 @@ import SubmitButton from "../components/authentication/SubmitButton";
 import ViewPassword from "../components/authentication/ViewPassword";
 import Input from "../components/authentication/Input";
 import { nameSchema, passwordSchema, emailSchema } from "../utils/FormValidation";
+import OtpOverlay from "../components/authentication/OtpOverlay";
 
 function SignUp(){
     const [viewPassword, setViewPassword] = useState(false);
@@ -16,6 +17,7 @@ function SignUp(){
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState({"name":null,"email":null, "password":null});
+    const [showOtpPage, setShowOtpPage] = useState(false);
 
     const handleFormSubmit = async (e) =>{
         e.preventDefault();
@@ -34,6 +36,7 @@ function SignUp(){
 
         const jsonResponse = response.json();
         console.log(jsonResponse);
+        setShowOtpPage(true)
     }
 
     const formErrorHandler = () => {
@@ -74,7 +77,18 @@ function SignUp(){
     }
 
     return (
-      <div>
+      <>
+      {showOtpPage && (
+        <>
+          <div className="fixed inset-0 bg-black/30 backdrop-blur-[2px] z-20" />
+
+          <div className="w-4/5 absolute top-1/2 z-30 -translate-y-1/2 left-1/2 -translate-x-1/2 shadow-2xl rounded-2xl">
+            <OtpOverlay showOtpPage={showOtpPage} setShowOtpPage={setShowOtpPage} />
+          </div>
+        </>
+      )}
+
+      <div className={showOtpPage ? "pointer-events-none select-none" : ""}>
         <HeaderImage />
         <div className="bg-[#f8f8f8] pt-6 px-6 py-4 relative -top-5 rounded-t-3xl z-10">
           <div className="flex flex-col items-center justify-center gap-4">
@@ -160,6 +174,7 @@ function SignUp(){
           </div>
         </div>
       </div>
+      </>
     );
 }
 

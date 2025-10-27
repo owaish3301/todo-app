@@ -8,6 +8,7 @@ import ViewPassword from "../components/authentication/ViewPassword";
 import Input from "../components/authentication/Input";
 import { nameSchema, passwordSchema, emailSchema } from "../utils/FormValidation";
 import OtpOverlay from "../components/authentication/OtpOverlay";
+import toast from "react-hot-toast";
 
 function SignUp(){
     const [viewPassword, setViewPassword] = useState(false);
@@ -34,9 +35,14 @@ function SignUp(){
           body:JSON.stringify({name:user,email,password})
         });
 
-        const jsonResponse = response.json();
-        console.log(jsonResponse);
-        setShowOtpPage(true)
+        const jsonResponse = await response.json();
+        if(jsonResponse.success){
+          setShowOtpPage(true);
+        }
+        else{
+          toast.error(jsonResponse.message)
+        }
+        
     }
 
     const formErrorHandler = () => {

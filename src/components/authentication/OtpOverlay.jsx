@@ -1,13 +1,36 @@
 import { useState } from "react";
 import Input from "./Input";
 import SubmitButton from "./SubmitButton";
-import { Link } from "react-router";
 import { CircleX } from "lucide-react";
+import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 
-function OtpOverlay({ showOtpPage, setShowOtpPage }) {
+function OtpOverlay({ showOtpPage, setShowOtpPage, email }) {
   const [otpVal, setOtpVal] = useState("");
+  const navigate = useNavigate();
 
-  const handleFormSubmit = () => {};
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch(`${import.meta.env.VITE_API_URI}auth/verifyOtp`,{
+      method:"POST",
+      credentials:"include",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body:JSON.stringify({email,otp:otpVal})
+    });
+    const jsonResponse = await response.json();
+    if(jsonResponse.success){
+      toast.success(jsonResponse.message);
+      navigate("/home");
+    }
+    else{
+      toast.error(jsonResponse.message);
+    }
+  };
+
+
+
   return (
     <div className="bg-[#f8f8f8] p-8 h-full w-full rounded-2xl">
       <button className="fixed right-4 top-4" onClick={()=>setShowOtpPage(!showOtpPage)}>
@@ -43,7 +66,7 @@ function OtpOverlay({ showOtpPage, setShowOtpPage }) {
             }}
           >
             Resend
-          </button>{" "}
+          </button>
         </p>
       </div>
     </div>

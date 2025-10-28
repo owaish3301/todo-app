@@ -19,8 +19,10 @@ function SignUp(){
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState({"name":null,"email":null, "password":null});
     const [showOtpPage, setShowOtpPage] = useState(false);
+    //TODO: loading state
 
     const handleFormSubmit = async (e) =>{
+      //TODO: error handling
         e.preventDefault();
         const isCorrect = formErrorHandler();
         if(!isCorrect){
@@ -152,7 +154,7 @@ function SignUp(){
                 <Input
                   type={viewConfirmPassword ? "text" : "password"}
                   placeholder={"Confirm Password"}
-                  name={"confirmPassword"}
+                  name={"password"}
                   value={confirmPassword}
                   valueSetter={setConfirmPassword}
                 />

@@ -6,10 +6,12 @@ import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 
 function OtpOverlay({ showOtpPage, setShowOtpPage, email }) {
+  //TODO: loading
   const [otpVal, setOtpVal] = useState("");
   const navigate = useNavigate();
 
   const handleFormSubmit = async (e) => {
+    //TODO: error handling
     e.preventDefault();
     const response = await fetch(`${import.meta.env.VITE_API_URI}auth/verifyOtp`,{
       method:"POST",

@@ -12,13 +12,12 @@ const passwordRequirements =
 
 const passwordSchema = z
   .string({
-    required_error: "Password is required.",
-    invalid_type_error: "Password must be a string.",
+    error: (e) => e.input === undefined ? "Password is required" : "Invalid data"
   })
-  .min(6, "Password must be at least 6 characters long.")
+  .min(6, "Password must be at least 6 characters long")
   .regex(
     new RegExp(passwordRequirements),
-    "Password must contain at least one letter, one number, and one symbol (e.g., !, @, #)."
+    "Password must contain at least one letter, one number, and one symbol (e.g., !, @, #)"
   );
 
 export { nameSchema, passwordSchema, emailSchema };

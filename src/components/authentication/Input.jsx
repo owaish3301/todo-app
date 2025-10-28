@@ -7,6 +7,7 @@ function Input({type, placeholder, name, value, valueSetter}){
          name={name} 
          value={value}
          onChange={(e)=>{valueSetter(e.target.value)}}
+         autoComplete="on"
         />
     )
 }

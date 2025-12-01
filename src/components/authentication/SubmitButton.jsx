@@ -3,7 +3,7 @@ function SubmitButton({text, label}){
       <button
         type="submit"
         aria-label={label}
-        className="mt-4 bg-[#7b86ff] py-2 rounded-xl text-white font-bold shadow-xl w-full"
+        className="mt-4 bg-[#7b86ff] py-2 rounded-xl text-white font-bold shadow-xl w-full flex justify-center"
       >
         {text}
       </button>

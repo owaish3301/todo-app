@@ -9,6 +9,7 @@ import Input from "../components/authentication/Input";
 import { nameSchema, passwordSchema, emailSchema } from "../utils/FormValidation";
 import OtpOverlay from "../components/authentication/OtpOverlay";
 import toast from "react-hot-toast";
+import Loader from "../components/Loader";
 
 function SignUp(){
     const [viewPassword, setViewPassword] = useState(false);
@@ -19,15 +20,15 @@ function SignUp(){
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState({"name":null,"email":null, "password":null});
     const [showOtpPage, setShowOtpPage] = useState(false);
-    //TODO: loading state
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleFormSubmit = async (e) =>{
-      //TODO: error handling
         e.preventDefault();
         const isCorrect = formErrorHandler();
         if(!isCorrect){
           return;
         }
+        setIsLoading(true);
 
         const response = await fetch(`${import.meta.env.VITE_API_URI}auth/signup`,{
           method:"POST",
@@ -36,6 +37,8 @@ function SignUp(){
           },
           body:JSON.stringify({name:user,email,password})
         });
+
+        setIsLoading(false);
 
         const jsonResponse = await response.json();
         if(jsonResponse.success){
@@ -168,7 +171,7 @@ function SignUp(){
                 <div className="text-red-500 ml-4">{error.password}</div>
               )}
 
-              <SubmitButton text={"Sign Up"} label={"SignUp"} />
+              <SubmitButton text={isLoading? <Loader /> :"Sign Up"} label={"SignUp"} />
             </form>
 
             <div className="h-[1px] w-1/3 bg-black"></div>

@@ -11,6 +11,7 @@ import {
 } from "../utils/FormValidation";
 import OtpOverlay from "../components/authentication/OtpOverlay";
 import toast from "react-hot-toast";
+import Loader from "../components/Loader";
 
 function SignIn() {
     const [viewPassword, setViewPassword] = useState(false);
@@ -19,7 +20,7 @@ function SignIn() {
     const navigate = useNavigate();
     const [error, setError] = useState({email:null, password:null})
     const [showOtpPage, setShowOtpPage] = useState(false);
-    //TODO: loading state
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleFormSubmit = async (e) =>{
         e.preventDefault();
@@ -27,6 +28,8 @@ function SignIn() {
         if (!isCorrect) {
           return;
         }
+
+        setIsLoading(true);
 
         const response = await fetch(`${import.meta.env.VITE_API_URI}auth/signin`,{
           method:"POST",
@@ -37,6 +40,9 @@ function SignIn() {
         });
 
         const jsonResponse = await response.json();
+
+        setIsLoading(false);
+
         if (jsonResponse.success) {
           if(!jsonResponse.user.verified){
             toast.error(jsonResponse.message);
@@ -103,7 +109,7 @@ function SignIn() {
               className="w-full max-w-sm flex flex-col"
               onSubmit={handleFormSubmit}
             >
-              <div className="mb-4 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-[#7b86ff]">
+              <div className="mb-2 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-[#7b86ff]">
                 <Mail className="mr-3 text-[#7b86ff]" width={24} height={24} />
                 <Input
                   type={"email"}
@@ -114,7 +120,7 @@ function SignIn() {
                 />
               </div>
               {error.email !== null && (
-                <div className="text-red-500 ml-4">{error.email}</div>
+                <div className="text-red-500 ml-4 mb-2">{error.email}</div>
               )}
 
               <div className="mb-2 flex items-center border border-gray-300 rounded-xl p-3 bg-white shadow-sm focus-within:border-[#7b86ff]">
@@ -136,13 +142,13 @@ function SignIn() {
               )}
 
               <Link
-                className="text-sm text-right text-[#7b86ff] mb-4"
+                className="text-sm text-right text-[#7b86ff] mb-4 w-max ml-auto"
                 to={"/reset-password"}
               >
                 Forgot Password?
               </Link>
 
-              <SubmitButton text={"Sign In"} label={"SignIn"} />
+              <SubmitButton text={isLoading? <Loader /> :"Sign In"} label={"SignIn"} />
             </form>
 
             <div className="h-[1px] w-1/3 bg-black"></div>

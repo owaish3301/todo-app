@@ -4,14 +4,16 @@ import SubmitButton from "./SubmitButton";
 import { CircleX } from "lucide-react";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
+import Loader from "../Loader";
 
 function OtpOverlay({ showOtpPage, setShowOtpPage, email }) {
-  //TODO: loading
+  const [isLoading, setIsLoading] = useState(false);
   const [otpVal, setOtpVal] = useState("");
   const navigate = useNavigate();
 
   const handleFormSubmit = async (e) => {
-    //TODO: error handling
+    setIsLoading(true);
+
     e.preventDefault();
     const response = await fetch(`${import.meta.env.VITE_API_URI}auth/verifyOtp`,{
       method:"POST",
@@ -22,6 +24,7 @@ function OtpOverlay({ showOtpPage, setShowOtpPage, email }) {
       body:JSON.stringify({email,otp:otpVal})
     });
     const jsonResponse = await response.json();
+    setIsLoading(false);
     if(jsonResponse.success){
       toast.success(jsonResponse.message);
       navigate("/home");
@@ -57,7 +60,7 @@ function OtpOverlay({ showOtpPage, setShowOtpPage, email }) {
               valueSetter={setOtpVal}
             />
           </div>
-          <SubmitButton text={"Verify OTP"} label={"verify-otp"} />
+          <SubmitButton text={isLoading? <Loader /> :"Verify OTP"} label={"verify-otp"} />
         </form>
         <p>
           Didn't receive the code?{" "}

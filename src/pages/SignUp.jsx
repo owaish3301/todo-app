@@ -38,9 +38,8 @@ function SignUp(){
           body:JSON.stringify({name:user,email,password})
         });
 
-        setIsLoading(false);
-
         const jsonResponse = await response.json();
+        setIsLoading(false);
         if(jsonResponse.success){
           setShowOtpPage(true);
         }
@@ -94,7 +93,7 @@ function SignUp(){
           <div className="fixed inset-0 bg-black/30 backdrop-blur-[2px] z-20" />
 
           <div className="w-4/5 absolute top-1/2 z-30 -translate-y-1/2 left-1/2 -translate-x-1/2 shadow-2xl rounded-2xl">
-            <OtpOverlay showOtpPage={showOtpPage} setShowOtpPage={setShowOtpPage} email={email} />
+            <OtpOverlay showOtpPage={showOtpPage} setShowOtpPage={setShowOtpPage} email={email} isReset={false} />
           </div>
         </>
       )}

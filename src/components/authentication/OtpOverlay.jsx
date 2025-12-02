@@ -6,7 +6,14 @@ import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import Loader from "../Loader";
 
-function OtpOverlay({ showOtpPage, setShowOtpPage, email }) {
+function OtpOverlay({
+  showOtpPage,
+  setShowOtpPage,
+  email,
+  isReset,
+  setShowNewPasswordPage,
+  setResetToken
+}) {
   const [isLoading, setIsLoading] = useState(false);
   const [otpVal, setOtpVal] = useState("");
   const navigate = useNavigate();
@@ -15,30 +22,44 @@ function OtpOverlay({ showOtpPage, setShowOtpPage, email }) {
     setIsLoading(true);
 
     e.preventDefault();
-    const response = await fetch(`${import.meta.env.VITE_API_URI}auth/verifyOtp`,{
-      method:"POST",
-      credentials:"include",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body:JSON.stringify({email,otp:otpVal})
-    });
+
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URI}auth/${
+        isReset ? "verifyResetPassword" : "verifyOtp"
+      }`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, otp: otpVal }),
+      }
+    );
     const jsonResponse = await response.json();
     setIsLoading(false);
-    if(jsonResponse.success){
-      toast.success(jsonResponse.message);
-      navigate("/home");
-    }
-    else{
+
+    if (jsonResponse.success) {
+      if(!isReset){
+        toast.success(jsonResponse.message);
+        navigate("/home");
+      }
+      else{
+        setResetToken(jsonResponse.token)
+        setShowOtpPage(false);
+        setShowNewPasswordPage(true);
+      }
+    } else {
       toast.error(jsonResponse.message);
-    }
+    };
   };
-
-
 
   return (
     <div className="bg-[#f8f8f8] p-8 h-full w-full rounded-2xl">
-      <button className="fixed right-4 top-4" onClick={()=>setShowOtpPage(!showOtpPage)}>
+      <button
+        className="fixed right-4 top-4"
+        onClick={() => setShowOtpPage(!showOtpPage)}
+      >
         <CircleX color={"#7b86ff"} size={30} />
       </button>
       <div className="flex flex-col items-center justify-center gap-4">
@@ -60,7 +81,10 @@ function OtpOverlay({ showOtpPage, setShowOtpPage, email }) {
               valueSetter={setOtpVal}
             />
           </div>
-          <SubmitButton text={isLoading? <Loader /> :"Verify OTP"} label={"verify-otp"} />
+          <SubmitButton
+            text={isLoading ? <Loader /> : "Verify OTP"}
+            label={"verify-otp"}
+          />
         </form>
         <p>
           Didn't receive the code?{" "}

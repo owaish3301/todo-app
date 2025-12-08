@@ -30,30 +30,35 @@ function SignIn() {
         }
 
         setIsLoading(true);
+        try{
+          const response = await fetch(`${import.meta.env.VITE_API_URI}auth/signin`,{
+            method:"POST",
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({email,password})
+          });
 
-        const response = await fetch(`${import.meta.env.VITE_API_URI}auth/signin`,{
-          method:"POST",
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body:JSON.stringify({email,password})
-        });
+          const jsonResponse = await response.json();
 
-        const jsonResponse = await response.json();
+          setIsLoading(false);
 
-        setIsLoading(false);
-
-        if (jsonResponse.success) {
-          if(!jsonResponse.user.verified){
+          if (jsonResponse.success) {
+            if(!jsonResponse.user.verified){
+              toast.error(jsonResponse.message);
+              setShowOtpPage(true);
+            }
+            else{
+              toast.success(jsonResponse.message);
+              navigate("/home");
+            }
+          } else {
             toast.error(jsonResponse.message);
-            setShowOtpPage(true);
           }
-          else{
-            toast.success(jsonResponse.message);
-            navigate("/home");
-          }
-        } else {
-          toast.error(jsonResponse.message);
+        }
+        catch{
+          toast.error("An internal error occured")
+          setIsLoading(false)
         }
     }
 

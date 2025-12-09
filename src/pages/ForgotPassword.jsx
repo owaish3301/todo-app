@@ -32,6 +32,7 @@ function ForgotPassword(){
           `${import.meta.env.VITE_API_URI}auth/forgotPassword`,
           {
             method: "POST",
+            credentials:"include",
             headers: {
               "Content-Type": "application/json",
             },

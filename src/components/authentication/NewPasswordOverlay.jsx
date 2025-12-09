@@ -28,6 +28,7 @@ function NewPasswordOverlay({ setShowNewPasswordPage, showNewPasswordPage, email
           `${import.meta.env.VITE_API_URI}auth/updatePassword`,
           {
             method: "POST",
+            credentials:"include",
             headers: {
               "Content-Type": "application/json",
             },

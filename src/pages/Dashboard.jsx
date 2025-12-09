@@ -1,12 +1,33 @@
+import { useNavigate } from "react-router";
 import AddTodo from "../components/dashboard/AddTodo";
 import AddTodoOverlay from "../components/dashboard/AddTodo/addTodoOverlay";
 import Header from "../components/dashboard/Header";
 import Todos from "../components/dashboard/Todos";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Dashboard(){
   const [showTodoOverlay, setShowTodoOverlay] = useState(false);
+  const navigate = useNavigate();
+  useEffect(()=>{
+    const checkAuth = async() => {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URI}auth/verify`,
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const jsonResponse = await response.json()
+      if(!jsonResponse.success) navigate("/signin");
+    }
+    checkAuth()
+  },[]);
+
     return (
       <>
         {showTodoOverlay && (
